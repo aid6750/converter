@@ -1,13 +1,18 @@
 #!/usr/bin/python3
-from PIL import Image
 import glob
 import argparse
 import os
+try :
+	from PIL import Image
+except:
+	os.system("pip3 install Pillow")
+	from PIL import Image
+
 def create_parser():
 	parser = argparse.ArgumentParser()
 	parser.add_argument("files",nargs='+')
-	parser.add_argument("--type",default='png')
-	parser.add_argument("--rm",default=False)
+	parser.add_argument("-type",default='png')
+	parser.add_argument("-rm",default=False)
 	return parser
 
 def convert(file,args):
@@ -16,7 +21,7 @@ def convert(file,args):
 	rgb_im.save(file.replace(file.split(".")[1], args.type), quality=95)
 	if (args.rm):
 		os.remove(file)
-		
+
 if __name__ == '__main__':
 	parser = create_parser()
 	args = parser.parse_args()
